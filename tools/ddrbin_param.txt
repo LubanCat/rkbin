@@ -50,6 +50,8 @@ optee_log_en=
 spl_log_en=
 tpl_log_en=
 
+trfc_mode=
+periodic_interval=
 first_init_dram_type=
 dfs_disable=
 pageclose=

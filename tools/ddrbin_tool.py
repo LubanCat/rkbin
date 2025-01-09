@@ -13,7 +13,7 @@ import platform
 import struct
 from datetime import datetime
 
-version_max = 5
+version_max = 6
 update_key_list = []
 
 chip_info = 'null'
@@ -52,6 +52,12 @@ index_info = {
     'size' : 0
 }
 
+# struct perf_index_info, u16
+perf_index_info = {
+    'offset' : 0,
+    'size' : 0
+}
+
 # struct sdram_head_info_index_v2
 sdram_head_info_index_v2 = {
     'cpu_gen_index' : index_info.copy(),
@@ -81,6 +87,16 @@ sdram_head_info_index_v3_4 = {
     'lp2_hash_index' : index_info.copy(),
     'ddr2_hash_index' : index_info.copy(),
     'ddr5_hash_index' : index_info.copy(),
+    'reserved0_index' : index_info.copy(),
+}
+
+sdram_head_info_index_v5 = {
+    'ch_perf_index_u16' : perf_index_info.copy(),
+    'com_perf_index_u16' : perf_index_info.copy(),
+}
+
+sdram_head_info_index_v6 = {
+    'uart_iomux_index_u16' : perf_index_info.copy(),
 }
 
 # struct global_info
@@ -164,6 +180,55 @@ hash_info = {
     'rank_mask1' : 0,
 }
 
+uart_id_2_iomux = {
+                # uart0 :    m0 :   addr,   iomux addr0, iomux mask0, iomux val0, iomux addr1, iomux mask1, iomux val1...
+    ('rk3568', 'rk3566', 'rk356x') : {
+                'uart0' : {'m0' : [0xfdd50000, 0xfdc20100, 0, 0x3000000, 0xfdc20010, 0, 0x770033, 0, 0, 0]},
+                'uart1' : {'m0' : [0xfe650000, 0xfdc6030c, 0, 0x1000000, 0xfdc60028, 0, 0x70002000, 0xfdc6002c, 0, 0x70002],
+                           'm1' : [0xfe650000, 0xfdc6030c, 0, 0x1000100, 0xfdc6005c, 0, 0x77004400, 0, 0, 0]},
+                'uart2' : {'m0' : [0xfe660000, 0xfdc6030c, 0, 0x0c000000, 0xfdc20018, 0, 0x00770011, 0, 0, 0],
+                           'm1' : [0xfe660000, 0xfdc6030c, 0, 0xc000400, 0xfdc6001c, 0, 0x7700220, 0, 0, 0]},
+                'uart3' : {'m0' : [0xfe670000, 0xfdc6030c, 0, 0x10000000, 0xfdc60000, 0, 0x770022, 0, 0, 0],
+                           'm1' : [0xfe670000, 0xfdc6030c, 0, 0x10001000, 0xfdc6004c, 0, 0x70004000, 0xfdc60050, 0, 0x70004]},
+                'uart4' : {'m0' : [0xfe680000, 0xfdc6030c, 0, 0x40000000, 0xfdc60004, 0, 0x7070202, 0, 0, 0],
+                           'm1' : [0xfe680000, 0xfdc6030c, 0, 0x40004000, 0xfdc60048, 0, 0x7700440, 0, 0, 0]},
+                'uart5' : {'m0' : [0xfe690000, 0xfdc60310, 0, 0x10000, 0xfdc60020, 0, 0x7700330, 0, 0, 0],
+                           'm1' : [0xfe690000, 0xfdc60310, 0, 0x10001, 0xfdc60050, 0, 0x77004400, 0, 0, 0]},
+                'uart6' : {'m0' : [0xfe6a0000, 0xfdc60310, 0, 0x40000, 0xfdc60020, 0, 0x70003000, 0xfdc60024, 0, 0x70003],
+                           'm1' : [0xfe6a0000, 0xfdc60310, 0, 0x40004, 0xfdc6001c, 0, 0x7700330, 0, 0, 0]},
+                'uart7' : {'m0' : [0xfe6b0000, 0xfdc60310, 0, 0x300000, 0xfdc60024, 0, 0x7700330, 0, 0, 0],
+                           'm1' : [0xfe6b0000, 0xfdc60310, 0, 0x300010, 0xfdc60054, 0, 0x770044, 0, 0, 0],
+                           'm2' : [0xfe6b0000, 0xfdc60310, 0, 0x300020, 0xfdc60060, 0, 0x77004400, 0, 0, 0]},
+                'uart8' : {'m0' : [0xfe6c0000, 0xfdc60310, 0, 0x400000, 0xfdc60034, 0, 0x7700230, 0, 0, 0],
+                           'm1' : [0xfe6c0000, 0xfdc60310, 0, 0x400040, 0xfdc6003c, 0, 0x70074004, 0, 0, 0]},
+                'uart9' : {'m0' : [0xfe6d0000, 0xfdc60310, 0, 0x3000000, 0xfdc60024, 0, 0x70003000, 0xfdc60028, 0, 0x70003],
+                           'm1' : [0xfe6d0000, 0xfdc60310, 0, 0x3000100, 0xfdc60074, 0, 0x7700440, 0, 0, 0],
+                           'm2' : [0xfe6d0000, 0xfdc60310, 0, 0x3000200, 0xfdc60064, 0, 0x770044, 0, 0, 0]},
+                },
+    ('rk3528') : {
+                'uart0' : {'m0' : [0xff9f0000, 0xff550094, 0, 0xf0001000, 0xff550098, 0, 0xf0001, 0, 0, 0],
+                           'm1' : [0xff9f0000, 0xff570040, 0, 0xf0002, 0xff570040, 0, 0xf00020, 0, 0, 0]},
+                'uart1' : {'m0' : [0xff9f8000, 0xff560084, 0, 0xf0002000, 0xff560084, 0, 0xf000200, 0, 0, 0],
+                           'm1' : [0xff9f8000, 0xff550094, 0, 0xf000200, 0xff550094, 0, 0xf00020, 0, 0, 0]},
+                'uart2' : {'m0' : [0xffa00000, 0xff560060, 0, 0xf0001, 0xff560060, 0, 0xf00010, 0, 0, 0],
+                           'm1' : [0xffa00000, 0xff560028, 0, 0xf0001, 0xff560028, 0, 0xf00010, 0, 0, 0]},
+                'uart3' : {'m0' : [0xffa08000, 0xff550088, 0, 0xf0002, 0xff550088, 0, 0xf00020, 0, 0, 0],
+                           'm1' : [0xffa08000, 0xff55008c, 0, 0xf0003000, 0xff550090, 0, 0xf0003, 0, 0, 0]},
+                'uart4' : {'m0' : [0xffa10000, 0xff570040, 0, 0xf000300, 0xff570040, 0, 0xf0003000, 0, 0, 0]},
+                'uart5' : {'m0' : [0xffa18000, 0xff560020, 0, 0xf000200, 0xff560020, 0, 0xf0002000, 0, 0, 0],
+                           'm1' : [0xffa18000, 0xff56003c, 0, 0xf0002, 0xff56003c, 0, 0xf0002000, 0, 0, 0]},
+                'uart6' : {'m0' : [0xffa20000, 0xff560064, 0, 0xf0004000, 0xff560064, 0, 0xf000400, 0, 0, 0],
+                           'm1' : [0xffa20000, 0xff560070, 0, 0xf0004000, 0xff560070, 0, 0xf00040, 0, 0, 0]},
+                'uart7' : {'m0' : [0xffa28000, 0xff560068, 0, 0xf0004000, 0xff560068, 0, 0xf000400, 0, 0, 0],
+                           'm1' : [0xffa28000, 0xff560028, 0, 0xf0004000, 0xff560028, 0, 0xf000400, 0, 0, 0]},
+
+    },
+}
+
+uart_iomux_info = {
+    'uart_addr' : 0,
+}
+
 # struct sdram_head_info_v2
 sdram_head_info_v2 = {
     'global_info' : global_info.copy(),
@@ -208,6 +273,30 @@ sdram_head_info_v5 = {
     'lp2_hash_info' : hash_info.copy(),
     'ddr2_hash_info' : hash_info.copy(),
     'ddr5_hash_info' : hash_info.copy(),
+}
+
+# struct sdram_head_info_v6
+sdram_head_info_v6 = {
+    'global_info' : global_info.copy(),
+    'ddr2_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'ddr3_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'ddr4_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'ddr5_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'lp2_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'lp3_info' : ddr2_3_4_lp2_3_info_v5.copy(),
+    'lp4_info' : lp4_info.copy(),
+    'dq_map_info' : dq_map_info.copy(),
+    'lp4x_info' : lp4_info.copy(),
+    'lp5_info' : lp4_info.copy(),
+    'lp4_4x_hash_info' : hash_info.copy(),
+    'lp5_hash_info' : hash_info.copy(),
+    'ddr4_hash_info' : hash_info.copy(),
+    'lp3_hash_info' : hash_info.copy(),
+    'ddr3_hash_info' : hash_info.copy(),
+    'lp2_hash_info' : hash_info.copy(),
+    'ddr2_hash_info' : hash_info.copy(),
+    'ddr5_hash_info' : hash_info.copy(),
+    'uart_iomux_info' : uart_iomux_info.copy(),
 }
 
 sdram_head_info_v0 = [[0xc, 0], [0x10, 0], [0x14, 0], [0x18, 0], [0x1c, 0], [0x20, 0], [0x24, 0]]
@@ -257,11 +346,13 @@ base_info_full = {
     'spl_log_en': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_0', 'shift': 1, 'mask': 0x1, 'version': 2},
     'tpl_log_en': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_0', 'shift': 0, 'mask': 0x1, 'version': 2},
     'reserved_global_reserved_0_bit5_11': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_0', 'shift': 5, 'mask': 0x7f, 'version': 2},
+    'periodic_interval': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 11, 'mask': 0x7f, 'version': 2},
+    'trfc_mode': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 9, 'mask': 0x3, 'version': 2},
     'first_init_dram_type': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 5, 'mask': 0xf, 'version': 2},
     'dfs_disable': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 4, 'mask': 0x1, 'version': 2},
     'pageclose': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 3, 'mask': 0x1, 'version': 2},
     'boot_fsp': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 0, 'mask': 0x7, 'version': 2},
-    'reserved_global_reserved_1_bit9_31': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 9, 'mask': 0x7fffff, 'version': 2},
+    'reserved_global_reserved_1_bit9_31': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_1', 'shift': 18, 'mask': 0x3fff, 'version': 2},
     'reserved_global_reserved_2_bit0_31': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_2', 'shift': 0, 'mask': 0xffffffff, 'version': 2},
     'reserved_global_reserved_3_bit0_31': {'value': 0, 'num_base': 'dec', 'index': 'global_index', 'position': 'reserved_3', 'shift': 0, 'mask': 0xffffffff, 'version': 2},
 
@@ -866,8 +957,15 @@ base_info_full = {
     'lp5_cs0_b_skew': {'value': 0, 'num_base': 'hex', 'index': 'skew_index', 'position': 'null', 'shift': 0, 'mask': 0, 'version': 4},
     'lp5_cs1_b_skew': {'value': 0, 'num_base': 'hex', 'index': 'skew_index', 'position': 'null', 'shift': 0, 'mask': 0, 'version': 4},
     'lp5_resetn_skew': {'value': 0, 'num_base': 'hex', 'index': 'skew_index', 'position': 'null', 'shift': 0, 'mask': 0, 'version': 4},
+
+    'uart_addr': {'value': 0, 'num_base': 'hex', 'index': 'uart_iomux_index_u16', 'position': 'uart_addr', 'shift': 0, 'mask': 0xffffffff, 'version': 6},
 }
 
+uart_iomux_info_template = {
+    'uart_iomux_addr0': {'value': 0, 'num_base': 'hex', 'index': 'uart_iomux_index_u16', 'position': 'uart_iomux_addr0', 'shift': 0, 'mask': 0xffffffff, 'version': 6},
+    'uart_iomux_mask0': {'value': 0, 'num_base': 'hex', 'index': 'uart_iomux_index_u16', 'position': 'uart_iomux_val0', 'shift': 0, 'mask': 0xffffffff, 'version': 6},
+    'uart_iomux_val0': {'value': 0, 'num_base': 'hex', 'index': 'uart_iomux_index_u16', 'position': 'uart_iomux_val0', 'shift': 0, 'mask': 0xffffffff, 'version': 6},
+}
 
 def bin_data_2_info(info_from_bin, read_out, ddrbin_index, version, info_from_txt):
     info_from_bin['start tag']['value'] = 0x12345678
@@ -884,7 +982,12 @@ def bin_data_2_info(info_from_bin, read_out, ddrbin_index, version, info_from_tx
                         #print(f"D: {key} = {value} {hex(value['v0_info'][0])}={read_out[i][1]}")
     elif version <= version_max:
         for index_name in ddrbin_index:
-            head_info_name = index_name[:-6]+'_info'
+            if "reserved" in index_name:
+                continue
+            if "index_u16" in index_name:
+                head_info_name = index_name[:-10]+'_info'
+            else:
+                head_info_name = index_name[:-6]+'_info'
             if ddrbin_index[index_name]['offset'] != 0 and 'skew' not in index_name:
                 for key, value in info_from_bin.items():
                     if value['index'] == index_name and value['version'] <= version:
@@ -919,7 +1022,12 @@ def modefy_2_bin_data(info_from_txt, write_in, ddrbin_index, version):
                         write_in[i][1] |= (value['value'] << value['v0_info'][1])
     elif version <= version_max:
         for index_name in ddrbin_index:
-            head_info_name = index_name[:-6]+'_info'
+            if "reserved" in index_name:
+                continue
+            if "index_u16" in index_name:
+                head_info_name = index_name[:-10]+'_info'
+            else:
+                head_info_name = index_name[:-6]+'_info'
             if ddrbin_index[index_name]['offset'] != 0 and 'skew' not in index_name:
                 position_name = 'null'
                 for key, value in info_from_txt.items():
@@ -951,7 +1059,14 @@ def modefy_2_bin_data(info_from_txt, write_in, ddrbin_index, version):
 
 def write_in_bin_data_v2(filebin, bin_skew_offset, write_in, ddrbin_index, info_from_txt, version):
     for index_name in ddrbin_index:
-        head_info_name = index_name[:-6]+'_info'
+        if "reserved" in index_name:
+                continue
+        if "index_u16" in index_name:
+                head_info_name = index_name[:-10]+'_info'
+        else:
+            head_info_name = index_name[:-6]+'_info'
+        if head_info_name not in write_in:
+            continue
         if ddrbin_index[index_name]['offset'] != 0 and 'skew' not in index_name:
             filebin.seek(bin_skew_offset + (ddrbin_index[index_name]['offset'] - 1) * 4)
             index_size = ddrbin_index[index_name]['size']
@@ -986,27 +1101,97 @@ def write_in_bin_data_v2(filebin, bin_skew_offset, write_in, ddrbin_index, info_
 
     return 0
 
+def modify_global_uart_2_uart_iomux(info_from_txt, ddrbin_index, version):
+    if version < 6:
+        return 0
+    uart_id = info_from_txt.get('uart id', {}).get('value')
+    uart_iomux = info_from_txt.get('uart iomux', {}).get('value')
+
+    for chips, config in uart_id_2_iomux.items():
+        if chip_info in chips:
+            uart = 'uart' + str(uart_id)
+            uart_config = config.get(uart)
+            if not uart_config:
+                print("Warn: uart_iomux_index_u16: {} will disable uart!".format(uart))
+                for key, value in info_from_txt.items():
+                    if value['index'] == 'uart_iomux_index_u16':
+                        value['value'] = 0
+                return 0
+
+            mode = 'm' + str(uart_iomux)
+            iomux_config = uart_config.get(mode)
+            if not iomux_config:
+                print("Error: uart_iomux_index_u16: Mode {} not found for {} in configuration for chip {}.".format(mode, uart, chip_info))
+                return -1
+
+            i = 0
+            for key, value in info_from_txt.items():
+                if value['index'] == 'uart_iomux_index_u16':
+                    value['value'] = iomux_config[i]
+                    i += 1
+                    #print(f"D: update info_from_txt[{key}] = {value['value']}")
+
+    return 0
 
 #info from bin + info from txt generate to loader parameters
 def txt_data_2_bin_data(info_from_txt, info_from_bin, ddrbin_index, write_in, version):
     print("\nnew bin config:")
 
+    need_modify_uart_iomux = False
     for key, value in info_from_txt.items():
         if key == 'start tag':
             continue
         if (info_from_txt[key]['value'] == 0) and (key not in update_key_list):
             info_from_txt[key]['value'] = info_from_bin[key]['value']
         else:
+            if info_from_txt[key]['index'] == 'uart_iomux_index_u16':
+                continue
             if info_from_txt[key]['num_base'] == 'hex':
                 print("{}: {}".format(key, hex(info_from_txt[key]['value'])))
             else:
                 print("{}: {}".format(key, info_from_txt[key]['value']))
+            if key == 'uart id' or key == 'uart iomux':
+                need_modify_uart_iomux = True
+
+    if need_modify_uart_iomux:
+        ret = modify_global_uart_2_uart_iomux(info_from_txt, ddrbin_index, version)
+        if ret != 0:
+            return -1
     #print(info_from_txt)
 
     modefy_2_bin_data(info_from_txt, write_in, ddrbin_index, version)
 
     return 0
 
+def uart_iomux_count_calculation(ddrbin_index, info_from_txt, info_from_bin, read_out, version):
+    if version <= version_max:
+        index_size = 0
+        for index_name in ddrbin_index:
+            if "uart_iomux_index_u16" in index_name:
+                index_size = ddrbin_index[index_name]['size']
+        if (index_size == 0):
+            return -1
+        head_info_name = 'uart_iomux_info'
+        for i in range(index_size // 3):
+            addr = 'uart_iomux_addr' + str(i)
+            mask = 'uart_iomux_mask' + str(i)
+            value = 'uart_iomux_val' + str(i)
+            read_out[head_info_name][addr] = 0
+            read_out[head_info_name][mask] = 0
+            read_out[head_info_name][value] = 0
+            #print(f"D:  read_out[head_info_name] = {read_out[head_info_name]}")
+            new_addr_dic2 = {addr: uart_iomux_info_template['uart_iomux_addr0'].copy()}
+            new_mask_dic2 = {mask: uart_iomux_info_template['uart_iomux_mask0'].copy()}
+            new_val_dic2 = {value: uart_iomux_info_template['uart_iomux_val0'].copy()}
+            new_addr_dic2[addr]['position'] = f'uart_iomux_addr{i}'
+            new_mask_dic2[mask]['position'] = f'uart_iomux_mask{i}'
+            new_val_dic2[value]['position'] = f'uart_iomux_val{i}'
+            info_from_txt.update(new_addr_dic2)
+            info_from_txt.update(new_mask_dic2)
+            info_from_txt.update(new_val_dic2)
+            info_from_bin.update(new_addr_dic2)
+            info_from_bin.update(new_mask_dic2)
+            info_from_bin.update(new_val_dic2)
 
 def bin_data_readout(filebin, ddrbin_index, read_out, bin_skew_offset, version, info_from_txt):
     global rk3528_skew_info
@@ -1021,7 +1206,14 @@ def bin_data_readout(filebin, ddrbin_index, read_out, bin_skew_offset, version, 
                 return -1
     elif version <= version_max:
         for index_name in ddrbin_index:
-            head_info_name = index_name[:-6]+'_info'
+            if "reserved" in index_name:
+                continue
+            if "_perf_" in index_name:
+                continue
+            if "index_u16" in index_name:
+                head_info_name = index_name[:-10]+'_info'
+            else:
+                head_info_name = index_name[:-6]+'_info'
             if ddrbin_index[index_name]['offset'] != 0 and 'skew' not in index_name:
                 filebin.seek(bin_skew_offset + (ddrbin_index[index_name]['offset'] - 1) * 4)
                 index_size = ddrbin_index[index_name]['size']
@@ -1075,7 +1267,10 @@ def gen_info_from_bin(filegen_path, info_from_bin, verinfo_full, version):
             else:
                 value_str = str(value['value'])
 
-            write_buff = key + '=' + value_str
+            if value['index'] == 'uart_iomux_index_u16':
+                write_buff = '/* ' + key + '=' + value_str + ' */'
+            else:
+                write_buff = key + '=' + value_str
             #print(f"D: {write_buff}")
             file.write(write_buff + '\n')
 
@@ -1094,15 +1289,15 @@ def print_help():
         "	1) modify 'ddrbin_param.txt', set ddr frequency, uart info etc what you want.\n"\
         "	If want to keep items default, please keep these items blank.\n"\
         "	The date & time in the version information will be updated by default.\n"\
-        "	like: ./ddrbin_tool px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin\n"\
+        "	like: ./ddrbin_tool.py px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin\n"\
         "\n"\
         "	OPTION: --verinfo_editable=TEXT		The TEXT(max 17 chars) will replace\n"\
         "						the date & time in the version information.\n"\
-        "	like: ./ddrbin_tool px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin [OPTION]\n"\
+        "	like: ./ddrbin_tool.py px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin [OPTION]\n"\
         "\n"\
         "function 2: get ddr.bin file config to gen_param.txt file\n"\
         "	If want to get ddrbin file config, please run like that:\n"\
-        "	./ddrbin_tool px30 -g gen_param.txt px30_ddr_333MHz_v1.15.bin\n"\
+        "	./ddrbin_tool.py px30 -g gen_param.txt px30_ddr_333MHz_v1.15.bin\n"\
         "	The config will show in gen_param.txt.\n"\
         "\n"\
         "Note:	The function 1 and function 2 are two separate functions\n"\
@@ -1130,7 +1325,7 @@ def ddrbin_tool(argc, argv):
     verinfo_editable_offset = 0
     verinfo_editable_length = 17
 
-    print("version v1.21 20241211")
+    print("version v1.22 20250115")
     print("python {}, {}, {}".format(sys.version.split(' ', 1)[0], platform.system(), platform.machine()))
     if sys.version_info < (3, 6):
         print("Warning: Please installed Python 3.6 or later.")
@@ -1306,33 +1501,51 @@ def ddrbin_tool(argc, argv):
 
         # skip gcpu_gen_freq after version_info
         filebin.seek(bin_skew_offset + 8)
-    elif version <= 5:
+    elif version <= version_max:
         if version >= 3:
             ddrbin_index.update(sdram_head_info_index_v2_3)
         if version >= 4:
             ddrbin_index.update(sdram_head_info_index_v3_4)
+        if version >= 5:
+            ddrbin_index.update(sdram_head_info_index_v5)
+        if version >= 6:
+            ddrbin_index.update(sdram_head_info_index_v6)
 
         if version < 5:
             read_out = copy.deepcopy(sdram_head_info_v2)
             write_in = copy.deepcopy(sdram_head_info_v2)
-        else:
+        elif version == 5:
             read_out = copy.deepcopy(sdram_head_info_v5)
             write_in = copy.deepcopy(sdram_head_info_v5)
+        else:
+            read_out = copy.deepcopy(sdram_head_info_v6)
+            write_in = copy.deepcopy(sdram_head_info_v6)
 
         #index_info read out
         for key in ddrbin_index:
-            try:
-                ddrbin_index[key]['offset'] = int.from_bytes(filebin.read(1), byteorder='little')
-                ddrbin_index[key]['size'] = int.from_bytes(filebin.read(1), byteorder='little')
-            except:
-                filebin.close()
-                print("readout ddrbin_index fail")
-                return -1
-            #print(f"D: {key} = {index[key]}",ddrbin_index[key]["offset"],ddrbin_index[key]["size"])
+            if '_u16' in key:
+                try:
+                    ddrbin_index[key]['offset'] = int.from_bytes(filebin.read(2), byteorder='little')
+                    ddrbin_index[key]['size'] = int.from_bytes(filebin.read(2), byteorder='little')
+                except:
+                    filebin.close()
+                    print("readout ddrbin_index perf_index fail")
+                    return -1
+            else:
+                try:
+                    ddrbin_index[key]['offset'] = int.from_bytes(filebin.read(1), byteorder='little')
+                    ddrbin_index[key]['size'] = int.from_bytes(filebin.read(1), byteorder='little')
+                except:
+                    filebin.close()
+                    print("readout ddrbin_index fail")
+                    return -1
+            #print(f"D: {key} = {ddrbin_index[key]}",ddrbin_index[key]["offset"],ddrbin_index[key]["size"])
     else:
         filebin.close()
         print("version not support")
         return -1
+
+    uart_iomux_count_calculation(ddrbin_index, info_from_txt, info_from_bin, read_out, version)
 
     if bin_data_readout(filebin, ddrbin_index, read_out, bin_skew_offset, version, info_from_txt) != 0:
         filebin.close()
@@ -1350,7 +1563,11 @@ def ddrbin_tool(argc, argv):
             filebin.close()
             return -1
 
-    txt_data_2_bin_data(info_from_txt, info_from_bin, ddrbin_index, write_in, version)
+    ret = txt_data_2_bin_data(info_from_txt, info_from_bin, ddrbin_index, write_in, version)
+    if ret != 0:
+        filebin.close()
+        print("modify ddrbin failed")
+        return -1
 
     if version < 2:
         if version_old_hit == 0:

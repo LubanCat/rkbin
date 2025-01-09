@@ -158,6 +158,15 @@ It is define the addr and size to save ddrbin log for last log.
 * boot_fsp
 To choose the which DDR freq to boot system. 0 means fsp0_freq, 1 means fsp1_freq, 2 means fsp2_freq, 3 means fsp3_freq, the default is 0.
 
+* periodic interval
+The 0 means disable periodic training, others means enable. Unit: 100ms.
+
+* trfc_mode
+0: use default trfc
+1: use next density trfc
+2: use max trfc
+3: use min trfc
+
 * first_init_dram_type
 The define first init dram type to saving initial time.
 |----------------------------|-----------------|
