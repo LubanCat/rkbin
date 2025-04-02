@@ -1,5 +1,18 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.01.elf
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-02 | rv1126b_bl31_v1.01.elf | a14bf51f4    | important |
+
+### New
+
+1. Support system suspend.
+2. Support scmi clock.
+
+------
+
 ## rv1126b_{ddr,spl,usbplug,bl31}_v1.00.bin
 
 | Date       | File                                     | Build commit                                                 | Severity |
