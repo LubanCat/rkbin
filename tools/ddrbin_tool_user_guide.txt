@@ -1,12 +1,12 @@
 function 1: modify ddr.bin file from ddrbin_param.txt.
 	1) modify 'ddrbin_param.txt', set ddr frequency, uart info etc what you want.
 	   If want to keep items default, please keep these items blank.
-	2) run 'ddrbin_tool' with argument 1: chip_name, argument 2: ddrbin_param.txt, argument 3: ddr bin file.
-	   like: ./ddrbin_tool px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin
+	2) run 'ddrbin_tool.py' with argument 1: chip_name, argument 2: ddrbin_param.txt, argument 3: ddr bin file.
+	   like: ./ddrbin_tool.py px30 ddrbin_param.txt px30_ddr_333MHz_v1.13.bin
 
 function 2: get ddr.bin file config to gen_param.txt file
 	If want to get ddrbin file config, please run like that:
-	./ddrbin_tool px30 -g gen_param.txt px30_ddr_333MHz_v1.15.bin
+	./ddrbin_tool.py px30 -g gen_param.txt px30_ddr_333MHz_v1.15.bin
 	The config will show in gen_param.txt.
 
 The detail information as following:
