@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_bl32_v1.00.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-08 | rv1126b_bl32_v1.00.bin | f63ac68db    | important |
+
+### New
+
+1. Initial version.
+
+------
+
 ## rv1126b_bl31_v1.01.elf
 
 | Date       | File                   | Build commit | Severity  |
