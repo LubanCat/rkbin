@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_usbplug_v1.01.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-14 | rv1126b_usbplug_v1.01.bin | 8532419ba16    | important |
+
+### New
+
+1. Add arch timer 1Ghz support.
+
+------
+
 ## rv1126b_bl32_v1.01.bin
 
 | Date       | File                   | Build commit | Severity  |
