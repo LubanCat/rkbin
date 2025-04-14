@@ -1,5 +1,24 @@
 # rv1126b Release Note
 
+## rv1126b_bl32_v1.01.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-14 | rv1126b_bl32_v1.01.bin | 0e8447122    | important |
+
+### New
+
+1. Add support for oem otp key cipher.
+
+### Fixed
+
+| Index | Severity  | Update                          | Issue description | Issue source |
+| ----- | --------- | ------------------------------- | ----------------- | ------------ |
+| 1     | important | fixed FW Enryption Key offset   | -                 | -            |
+| 2     | important | correct the clock used by RKRNG | -                 | -            |
+
+------
+
 ## rv1126b_bl32_v1.00.bin
 
 | Date       | File                   | Build commit | Severity  |
