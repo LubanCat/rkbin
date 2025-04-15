@@ -1,5 +1,18 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.02.elf
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-15 | rv1126b_bl31_v1.02.elf | 32ea6e285    | important |
+
+### New
+
+1. BL31 runs at 0x40000000.
+2. Save/restore data of system sram when system suspend/resume.
+
+------
+
 ## rv1126b_spl_v1.01.bin
 
 | Date       | File                   | Build commit | Severity  |
