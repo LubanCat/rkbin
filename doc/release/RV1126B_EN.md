@@ -1,5 +1,28 @@
 # rv1126b Release Note
 
+## rv1126b{p}_ddr_{1332, 1056}MHz_v1.02.bin
+
+| Date       | File                                     | Build commit | Severity |
+| ---------- | :--------------------------------------- | ------------ | -------- |
+| 2025-04-25 | rv1126b{p}_ddr_{1332, 1056}MHz_v1.02.bin | 701e251084   | critical |
+
+### New
+
+1. Added support for arch timer 1GHz.
+2. Added thunder-boot DDR bin.
+3. Added eyescan DDR bin.
+
+### Fixed
+
+| Index | Severity  | Update                                                       | Issue description             | Issue source |
+| ----- | --------- | ------------------------------------------------------------ | ----------------------------- | ------------ |
+| 1     | important | Optimized SI configuration                                   | -                             | -            |
+| 2     | critical  | Fix clk skew calculation error in certain scenarios          | Instability in some DDR3/DDR4 | -            |
+| 3     | critical  | Fix LPDDR4(X) stability issues                               | -                             | -            |
+| 4     | critical  | Resolve initialization failures for specific memory capacity combinations | -                             | -            |
+
+------
+
 ## rv1126b_bl32_v1.02.bin
 
 | Date       | File                   | Build commit | Severity  |
