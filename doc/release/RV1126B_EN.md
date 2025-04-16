@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.03.elf
+
+| Date       | File                  | Build commit | Severity  |
+| ---------- | :-------------------- | ------------ | --------- |
+| 2025-04-16 | rv1126b_bl31_v1.03.elf | d93a2fceb | important |
+
+### New
+
+1. Improve stability of system suspend .
+
+------
+
 ## rv1126b_bl31_v1.02.elf
 
 | Date       | File                   | Build commit | Severity  |
