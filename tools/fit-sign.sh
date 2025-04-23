@@ -274,6 +274,8 @@ function sign_loader()
 	${TOOL_RK_SIGN} lk --key ${RSA_PRI_KEY} --pubkey ${RSA_PUB_KEY}
 	if ls ${SIGN_OUTPUT}/*loader*.bin >/dev/null 2>&1 ; then
 		${TOOL_RK_SIGN} sl --loader ${SIGN_OUTPUT}/*loader*.bin
+	elif ls ${SIGN_OUTPUT}/MiniLoaderAll.bin >/dev/null 2>&1 ; then
+		${TOOL_RK_SIGN} sl --loader ${SIGN_OUTPUT}/MiniLoaderAll.bin
 	fi
 	if ls ${SIGN_OUTPUT}/*download*.bin >/dev/null 2>&1 ; then
 		${TOOL_RK_SIGN} sl --loader ${SIGN_OUTPUT}/*download*.bin
@@ -581,6 +583,9 @@ function prepare()
 	LOADER_NAME=`find ${ARG_SRC_DIR} -name '*loader*bin' | head -n 1`
 	if [ -z "${LOADER_NAME}" ]; then
 		LOADER_NAME=`find ${ARG_SRC_DIR} -name '*download*.bin' | head -n 1`
+	fi
+	if [ -z "${LOADER_NAME}" ]; then
+		LOADER_NAME=`find ${ARG_SRC_DIR} -name 'MiniLoaderAll.bin' | head -n 1`
 	fi
 	if [ -z "${LOADER_NAME}" ]; then
 		echo "ERROR: No platform loader or download found"
