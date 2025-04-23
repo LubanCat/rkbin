@@ -1,5 +1,19 @@
 # rv1126b Release Note
 
+## rv1126b_bl32_v1.02.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-04-23 | rv1126b_bl32_v1.02.bin | 106240c23    | important |
+
+### Fixed
+
+| Index | Severity  | Update                                  | Issue description | Issue source |
+| ----- | --------- | --------------------------------------- | ----------------- | ------------ |
+| 1     | important | correct whether reading ns otp with ecc | -                 | -            |
+
+------
+
 ## rv1126b_bl31_v1.03.elf
 
 | Date       | File                  | Build commit | Severity  |
