@@ -595,7 +595,7 @@ function finish()
 	echo
 	echo "Rollback-Index:"
 	for FILE in ${SIGN_OUTPUT}/*.img; do
-		if file ${FILE} | grep -q 'Device Tree Blob' ; then
+		if file $(realpath ${FILE}) | grep -q 'Device Tree Blob' ; then
 			VERSION=`fdtget -ti ${FILE} /configurations/conf rollback-index`
 			NAME=`basename ${FILE}`
 			echo "    - ${NAME}=${VERSION}"
@@ -618,7 +618,7 @@ function main()
 		if echo ${FILE} | grep -q "uboot.img"; then
 			continue;
 		fi
-		if file ${FILE} | grep -q 'Device Tree Blob' ; then
+		if file $(realpath ${FILE}) | grep -q 'Device Tree Blob' ; then
 			FILE=$(basename "${FILE}" .img)
 			sign_fit ${FILE}
 		fi
