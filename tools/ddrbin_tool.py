@@ -21,7 +21,7 @@ chip_list = ['px30', 'px30s', 'px3se', 'px5', 'rk1808', 'rk2118', 'rk312x', 'rk3
     'rk3128h', 'rk322x', 'rk3228a', 'rk3228b', 'rk3228h', 'rk322xh', 'rk3229', 'rk3308', 'rk3288',
     'rk3326', 'rk3326s', 'rk3328', 'rk3368', 'rk3399', 'rk3506', 'rk3528', 'rk356x', 'rk3562',
     'rk3566', 'rk3568', 'rk3576', 'rk3588', 'rv1103', 'rv1103b', 'rv1106', 'rv1108', 'rv1109',
-    'rv1126']
+    'rv1126', 'rv1126b']
 
 version_old_list = ['rk322xh', 'rk3328', 'rk3318']
 
@@ -1133,6 +1133,27 @@ def modify_global_uart_2_uart_iomux(info_from_txt, ddrbin_index, version):
 
     return 0
 
+def txt_data_check_availability(info_from_txt, chip_info):
+    # RV1126B: lp4_f1_freq_mhz and lp4x_f1_freq_mhz required less than 400MHz.
+    if chip_info == 'rv1126b':
+        for key in ['lp4_f1_freq_mhz', 'lp4x_f1_freq_mhz']:
+            if info_from_txt[key]['value'] > 400:
+                print("Error: {}={} out of range, required 324MHz-400MHz.".format(key, info_from_txt[key]['value']))
+                return -1
+
+    # RK3588,RK3576: the frequency of F0 must be maximum.
+    if chip_info in ['rk3588', 'rk3576']:
+        lp4_freq_keys = ['lp4_freq', 'lp4_f1_freq_mhz', 'lp4_f2_freq_mhz', 'lp4_f3_freq_mhz']
+        lp4x_freq_keys = ['lp4x_freq', 'lp4x_f1_freq_mhz', 'lp4x_f2_freq_mhz', 'lp4x_f3_freq_mhz']
+        lp5_freq_keys = ['lp5_freq', 'lp5_f1_freq_mhz', 'lp5_f2_freq_mhz', 'lp5_f3_freq_mhz']
+        for freq_keys in lp4_freq_keys, lp4x_freq_keys, lp5_freq_keys:
+            if info_from_txt[freq_keys[0]]['value'] != max([info_from_txt[key]['value'] for key in freq_keys]):
+                freq_values = {key: info_from_txt[key]['value'] for key in freq_keys}
+                print("Error: {} value must be maximum, current {}.".format(freq_keys[0], freq_values))
+                return -1
+
+    return 0
+
 #info from bin + info from txt generate to loader parameters
 def txt_data_2_bin_data(info_from_txt, info_from_bin, ddrbin_index, write_in, version):
     print("\nnew bin config:")
@@ -1325,7 +1346,7 @@ def ddrbin_tool(argc, argv):
     verinfo_editable_offset = 0
     verinfo_editable_length = 17
 
-    print("version v1.22 20250115")
+    print("version v1.23 20250516")
     print("python {}, {}, {}".format(sys.version.split(' ', 1)[0], platform.system(), platform.machine()))
     if sys.version_info < (3, 6):
         print("Warning: Please installed Python 3.6 or later.")
@@ -1562,6 +1583,11 @@ def ddrbin_tool(argc, argv):
             print("generate info fail.")
             filebin.close()
             return -1
+
+    if txt_data_check_availability(info_from_txt, chip_info) != 0:
+        filebin.close()
+        print("Error: modify ddrbin failed")
+        return -1
 
     ret = txt_data_2_bin_data(info_from_txt, info_from_bin, ddrbin_index, write_in, version)
     if ret != 0:
