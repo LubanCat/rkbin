@@ -1,5 +1,19 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.04.elf
+
+| 时间       | 文件                  | 编译 commit | 重要程度 |
+| ---------- | :-------------------- | ----------- | -------- |
+| 2025-05-06 | rv1126b_bl31_v1.04.elf | 886a0421f | 重要 |
+
+### New
+
+1. 支持LP_AOA休眠模式。
+2. 支持非安全配置remap_dsmc、remap_perixip、remap_pmuxip。
+3. 使能tsadc_shut_m0功能。
+
+------
+
 ## rv1126b_spl{, _ipc}_v1.02.bin
 
 | 时间       | 文件                   | 编译 commit | 重要程度 |

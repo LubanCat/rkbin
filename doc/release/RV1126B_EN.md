@@ -1,5 +1,19 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.04.elf
+
+| Date       | File                  | Build commit | Severity  |
+| ---------- | :-------------------- | ------------ | --------- |
+| 2025-05-06 | rv1126b_bl31_v1.04.elf | 886a0421f | important |
+
+### New
+
+1. Support LP_AOA sleep mode.
+2. Support non-secure configuration remap_dsmc, remap_perixip, remap_pmuxip.
+3. Enable tsadc_shut_m0 function.
+
+------
+
 ## rv1126b_spl{, _ipc}_v1.02.bin
 
 | Date       | File                   | Build commit | Severity  |
