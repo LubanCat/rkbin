@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_spl{, _ipc}_v1.02.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-05-06 | rv1126b_spl{, _ipc}_v1.02.bin | e4069c1b773    | important |
+
+### New
+
+1. Adjust tsadc bias current.
+
+------
+
 ## rv1126b{p}_ddr_{1332, 1056}MHz_v1.02.bin
 
 | Date       | File                                     | Build commit | Severity |
