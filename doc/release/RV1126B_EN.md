@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_spl{, _ipc}_v1.03.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-05-08 | rv1126b_spl{, _ipc}_v1.03.bin | bc03ef0985f    | important |
+
+### New
+
+1. Fix bias error.
+
+------
+
 ## rv1126b_bl31_v1.04.elf
 
 | Date       | File                  | Build commit | Severity  |
