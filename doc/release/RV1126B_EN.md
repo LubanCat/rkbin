@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_usbplug_v1.02.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-05-09 | rv1126b_usbplug_v1.02.bin | ac302d626c    | important |
+
+### New
+
+1. Add uart upgrade support.
+
+------
+
 ## rv1126b_spl{, _ipc}_v1.03.bin
 
 | Date       | File                   | Build commit | Severity  |
