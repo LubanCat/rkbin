@@ -1,5 +1,19 @@
 # rv1126b Release Note
 
+## rv1126b_bl32_v1.03.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-05-12 | rv1126b_bl32_v1.03.bin | 6fa7d182f    | important |
+
+### Fixed
+
+| Index | Severity  | Update                                                   | Issue description | Issue source |
+| ----- | --------- | -------------------------------------------------------- | ----------------- | ------------ |
+| 1     | important | fix crypto result error when using dynamic shared memory | -                 | -            |
+
+------
+
 ## rv1126b_usbplug_v1.03.bin
 
 | Date       | File                   | Build commit | Severity  |
