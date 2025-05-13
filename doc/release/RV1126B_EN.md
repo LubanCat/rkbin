@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_usbplug_v1.03.bin
+
+| Date       | File                   | Build commit | Severity  |
+| ---------- | :--------------------- | ------------ | --------- |
+| 2025-05-13 | rv1126b_usbplug_v1.03.bin | 37d8770ee4   | important |
+
+### New
+
+1. Fix reboot fail.
+
+------
+
 ## rv1126b_usbplug_v1.02.bin
 
 | Date       | File                   | Build commit | Severity  |
