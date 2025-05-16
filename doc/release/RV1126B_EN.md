@@ -1,5 +1,18 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.05.elf
+
+| Date       | File                  | Build commit | Severity  |
+| ---------- | :-------------------- | ------------ | --------- |
+| 2025-05-16 | rv1126b_bl31_v1.05.elf | ce0a773ac | important |
+
+### New
+
+1. Support fiq-debugger.
+2. Support lp_pr sleep mode.
+
+------
+
 ## rv1126b_bl32_v1.03.bin
 
 | Date       | File                   | Build commit | Severity  |
