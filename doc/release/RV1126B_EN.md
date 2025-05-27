@@ -1,5 +1,17 @@
 # rv1126b Release Note
 
+## rv1126b_hpmcu_tb_v1.00.bin
+
+| Date       | File                  | Build commit | Severity |
+| ---------- | :-------------------- | ----------- | -------- |
+| 2025-05-27 | rv1126b_hpmcu_tb_v1.00.bin | rtt:3377af5ff6#hal:5c682f97 | important |
+
+### New
+
+1. Initial version.
+
+------
+
 ## rv1126b_bl31_v1.05.elf
 
 | Date       | File                  | Build commit | Severity  |
