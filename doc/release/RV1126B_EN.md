@@ -1,5 +1,18 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.06.elf
+
+| Date       | File                  | Build commit | Severity  |
+| ---------- | :-------------------- | ------------ | --------- |
+| 2025-06-06 | rv1126b_bl31_v1.06.elf | 1b7f2f7db | important |
+
+### New
+
+1. Improve the speed of system suspend/resume.
+2. Enhance the stability of system suspend/resume for DDR4 boards.
+
+------
+
 ## rv1126b_hpmcu_tb_v1.00.bin
 
 | Date       | File                  | Build commit | Severity |
