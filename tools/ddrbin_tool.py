@@ -72,10 +72,10 @@ sdram_head_info_index_v2 = {
     'lp5_index' : index_info.copy(),
     'skew_index' : index_info.copy(),
     'dq_map_index' : index_info.copy(),
+    'lp4x_index' : index_info.copy(),
 }
 
 sdram_head_info_index_v2_3 = {
-    'lp4x_index' : index_info.copy(),
     'lp4_4x_hash_index' : index_info.copy()
 }
 
@@ -1346,7 +1346,7 @@ def ddrbin_tool(argc, argv):
     verinfo_editable_offset = 0
     verinfo_editable_length = 17
 
-    print("version v1.23 20250516")
+    print("version v1.24 20250610")
     print("python {}, {}, {}".format(sys.version.split(' ', 1)[0], platform.system(), platform.machine()))
     if sys.version_info < (3, 6):
         print("Warning: Please installed Python 3.6 or later.")
