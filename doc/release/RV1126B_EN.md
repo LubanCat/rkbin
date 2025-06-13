@@ -1,5 +1,24 @@
 # rv1126b Release Note
 
+## rv1126b{p}_ddr_{1332, 1056}MHz_v1.03.bin
+
+| Date       | File                                     | Build commit | Severity |
+| ---------- | :--------------------------------------- | ------------ | -------- |
+| 2025-06-13 | rv1126b{p}_ddr_{1332, 1056}MHz_v1.03.bin | c4d8224017   | critical |
+
+### Warn
+
+1. The bl31 should be updated to v1.06 or above.
+
+### Fixed
+
+| Index | Severity  | Update                    | Issue description                                            | Issue source |
+| ----- | --------- | ------------------------- | ------------------------------------------------------------ | ------------ |
+| 1     | important | Fix refresh_margin        | LPDDR4(X) and LPDDR3 may be unstable at elevated temperatures and low frequencies | -            |
+| 2     | critical  | Fix DDR4 stability issues |                                                              | -            |
+
+------
+
 ## rv1126b_bl31_v1.06.elf
 
 | Date       | File                  | Build commit | Severity  |
