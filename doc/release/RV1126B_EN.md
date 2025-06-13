@@ -1,5 +1,20 @@
 # rv1126b Release Note
 
+## rv1126b_bl31_v1.07.elf
+
+| Date       | File                  | Build commit | Severity  |
+| ---------- | :-------------------- | ------------ | --------- |
+| 2025-06-13 | rv1126b_bl31_v1.07.elf | 46bfa4121 | important |
+
+### New
+
+1. Save/restore PVTPLL when system suspend/resume.
+2. Improve stability of system reboot.
+3. Support to boot HPMCU.
+4. Improve stability of system temperature control.
+
+------
+
 ## rv1126b{p}_ddr_{1332, 1056}MHz_v1.03.bin
 
 | Date       | File                                     | Build commit | Severity |
